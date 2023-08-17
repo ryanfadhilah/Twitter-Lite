@@ -1,4 +1,4 @@
-// import AccountProfile from "@/components/forms/AccountProfile";
+import AccountProfile from "@/components/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs";
 
 const page = async () => {
