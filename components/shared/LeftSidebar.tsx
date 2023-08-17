@@ -1,9 +1,11 @@
 "use client";
 
 import { sidebarLinks } from "@/constants";
+import { OrganizationSwitcher, SignOutButton, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { AiOutlineCloseSquare, AiOutlineCheckSquare } from "react-icons/ai";
 
 const LeftSidebar = () => {
   const router = useRouter();
@@ -21,8 +23,8 @@ const LeftSidebar = () => {
             <Link
               href={v.route}
               key={i}
-              className={`leftsidevar_link
-            ${isActive && ""}
+              className={`leftsidebar_link
+            ${isActive && "bg-blue"}
             `}
             >
               <Image src={v.imgURL} alt={v.label} width={22} height={22} />
@@ -30,6 +32,17 @@ const LeftSidebar = () => {
             </Link>
           );
         })}
+      </div>
+
+      <div className="mt-10 px-5">
+        <SignedIn>
+          <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+            <div className="flex items-center cursor-pointer text-small-regular gap-1">
+              <AiOutlineCloseSquare className="text-white"></AiOutlineCloseSquare>
+              <p className="text-light-1 ">Logout</p>
+            </div>
+          </SignOutButton>
+        </SignedIn>
       </div>
     </section>
   );
