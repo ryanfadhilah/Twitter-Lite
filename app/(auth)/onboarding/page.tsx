@@ -2,18 +2,18 @@ import AccountProfile from "@/components/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs";
 
 const page = async () => {
+  // Combined Clerk & MongoDB
+  const userInfo = {};
   // Clerk
   const user = await currentUser();
   // MongoDB
-  const userInfo = {};
-  // Combined Clerk & MongoDB
   const userData = {
     id: user?.id,
-    // objectId: userInfo._id,
-    // username: userInfo?.username || user?.username
-    // name: userInfo?.name || user.firstName || "",
-    // bio:userInfo?.bio || "",
-    // image:userInfo?.image : user.imageUrl
+    objectId: userInfo._id,
+    username: userInfo?.username || user?.username,
+    name: userInfo?.name || user.firstName || "",
+    bio: userInfo?.bio || "",
+    image: userInfo?.image || user?.imageUrl,
   };
 
   return (
@@ -24,10 +24,10 @@ const page = async () => {
       </p>
 
       <section className="mt-9 bg-dark-2 p-10">
-        {/* <AccountProfile
+        <AccountProfile
           user={userData}
           buttonTitle={"Continue"}
-        ></AccountProfile> */}
+        ></AccountProfile>
       </section>
     </main>
   );
