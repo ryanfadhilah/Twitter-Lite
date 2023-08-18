@@ -13,7 +13,7 @@ const LeftSidebar = () => {
 
   return (
     <section className="custom-scrollbar leftsidebar">
-      <div className="flex w-full flex-1 flex-col gap-6 px-6">
+      <div className="flex w-full flex-1 flex-col gap-6 px-6 ">
         {sidebarLinks.map((v, i, a) => {
           // Active ?
           const isActive =
@@ -23,7 +23,7 @@ const LeftSidebar = () => {
             <Link
               href={v.route}
               key={i}
-              className={`leftsidebar_link
+              className={`leftsidebar_link hover:bg-gray-700 transition-all ease-out duration-500
             ${isActive && "bg-blue"}
             `}
             >

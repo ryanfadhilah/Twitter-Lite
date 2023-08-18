@@ -20,6 +20,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 interface interfaceAccountProfile {
   user: {
@@ -34,9 +36,19 @@ interface interfaceAccountProfile {
 }
 
 const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
+  // to get current Route
+  const pathname = usePathname();
+
+  // Change Browser Route
+  const router = useRouter();
+
+  // Collect & Manipulate form data / state
   const [files, setFiles] = useState<File[]>([]);
+
+  // Upload Image Hook: Upload thing
   const { startUpload } = useUploadThing("media");
 
+  // Handle Form Input value : React Hook Form
   const form = useForm<z.infer<typeof UserValidation>>({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -47,6 +59,7 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
     },
   });
 
+  // Handle Form Input (Image)
   const handleImage = (
     e: React.ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
@@ -71,8 +84,8 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
   };
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    // Image
     const blob = values.profile_photo;
-
     const hasImageChanged = isBase64Image(blob);
     if (hasImageChanged) {
       const imgRes = await startUpload(files);
@@ -82,20 +95,20 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
       }
     }
 
-    // await updateUser({
-    //   name: values.name,
-    //   path: pathname,
-    //   username: values.username,
-    //   userId: user.id,
-    //   bio: values.bio,
-    //   image: values.profile_photo,
-    // });
+    await updateUser({
+      userId: user.id,
+      name: values.name,
+      username: values.username,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: pathname,
+    });
 
-    // if (pathname === "/profile/edit") {
-    //   router.back();
-    // } else {
-    //   router.push("/");
-    // }
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      router.push("/");
+    }
   };
 
   return (

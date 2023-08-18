@@ -2,11 +2,11 @@ import AccountProfile from "@/components/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs";
 
 const page = async () => {
-  // Combined Clerk & MongoDB
+  // MongoDB
   const userInfo = {};
   // Clerk
   const user = await currentUser();
-  // MongoDB
+  // Combined Clerk & MongoDB
   const userData = {
     id: user?.id,
     objectId: userInfo._id,
@@ -24,10 +24,7 @@ const page = async () => {
       </p>
 
       <section className="mt-9 bg-dark-2 p-10">
-        <AccountProfile
-          user={userData}
-          buttonTitle={"Continue"}
-        ></AccountProfile>
+        <AccountProfile user={userData} buttonTitle={"Continue"} />
       </section>
     </main>
   );
