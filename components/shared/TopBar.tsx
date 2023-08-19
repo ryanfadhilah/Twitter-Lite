@@ -9,8 +9,10 @@ const TopBar = () => {
   return (
     <nav className="topbar">
       <Link href={"/"} className="flex items-center gap-4">
-        <ImTwitter className="text-blue"></ImTwitter>
-        <p className="text-heading3-bold text-light-1 max-xs:hidden">Twitter</p>
+        <ImTwitter className="text-blue shrink-0 sm:text-heading3-bold"></ImTwitter>
+        <p className="text-heading3-bold text-light-1 max-xs:hidden">
+          Blue Bird
+        </p>
       </Link>
 
       <div className="flex items-center gap-1">

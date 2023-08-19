@@ -20,8 +20,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
-import { updateUser } from "@/lib/actions/user.actions";
+
 import { usePathname, useRouter } from "next/navigation";
+import { updateUser } from "@/lib/actions/user/userUpdate.actions";
 
 interface interfaceAccountProfile {
   user: {
