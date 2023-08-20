@@ -1,4 +1,5 @@
 "use server";
+import TweetCard from "@/components/cards/TweetCard";
 import { fetchTweets } from "@/lib/actions/tweet/tweetFetch.actions";
 import { UserButton, currentUser } from "@clerk/nextjs";
 
@@ -11,7 +12,7 @@ export default async function Home() {
       <h1 className="head-text text-left">Home</h1>
 
       <section className="mt-9 flex flex-col gap-10">
-        {/* {result.posts.length === 0 ? (
+        {result.posts.length === 0 ? (
           <p className="no-result">No threads found</p>
         ) : (
           <>
@@ -19,7 +20,7 @@ export default async function Home() {
               <TweetCard
                 key={v._id}
                 id={v._id}
-                currentUserId={user.id}
+                currentUserId={user?.id || ""}
                 parentId={v.parentId}
                 content={v.text}
                 author={v.author}
@@ -29,7 +30,7 @@ export default async function Home() {
               />
             ))}
           </>
-        )} */}
+        )}
       </section>
 
       {/* <Pagination
