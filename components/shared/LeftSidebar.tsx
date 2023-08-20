@@ -1,7 +1,12 @@
 "use client";
 
 import { sidebarLinks } from "@/constants";
-import { OrganizationSwitcher, SignOutButton, SignedIn } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  SignOutButton,
+  SignedIn,
+  useAuth,
+} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -10,6 +15,7 @@ import { AiOutlineCloseSquare, AiOutlineCheckSquare } from "react-icons/ai";
 const LeftSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { userId } = useAuth();
 
   return (
     <section className="custom-scrollbar leftsidebar">
@@ -19,6 +25,11 @@ const LeftSidebar = () => {
           const isActive =
             (pathname.includes(v.route) && v.route.length > 1) ||
             pathname === v.route;
+
+          if (v.route === "/profile") {
+            v.route = `${v.route}/${userId}`;
+          }
+
           return (
             <Link
               href={v.route}
