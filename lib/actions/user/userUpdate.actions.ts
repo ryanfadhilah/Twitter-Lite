@@ -13,6 +13,7 @@ interface Params {
   image: string;
   path: string;
 }
+
 export async function updateUser({
   userId,
   name,

@@ -20,7 +20,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { TweetValidation } from "@/lib/validations/tweet";
 import { createTweet } from "@/lib/actions/tweet/tweetCreate.actions";
 import { useState } from "react";
-// import { createTweet } from "@/lib/actions/tweet.actions";
 
 interface Props {
   userId: string;
@@ -30,8 +29,7 @@ function PostTweet({ userId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-
-  const { organization } = useOrganization();
+  const { organization } = useOrganization(); // clerk
 
   const form = useForm<z.infer<typeof TweetValidation>>({
     resolver: zodResolver(TweetValidation),
@@ -40,11 +38,11 @@ function PostTweet({ userId }: Props) {
       accountId: userId,
     },
   });
-
+  console.log(organization);
   // Back-End / Server Action
   const onSubmit = async (values: z.infer<typeof TweetValidation>) => {
-    setLoading(true);
     try {
+      setLoading(true);
       await createTweet({
         text: values.tweet,
         author: userId,

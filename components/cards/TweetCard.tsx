@@ -1,3 +1,4 @@
+import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -96,6 +97,7 @@ const TweetCard = ({
           </div>
         </div>
 
+        {/* Delete Tweet */}
         {/* <DeleteTweet
           threadId={JSON.stringify(id)}
           currentUserId={currentUserId}
@@ -105,6 +107,7 @@ const TweetCard = ({
         /> */}
       </div>
 
+      {/* Show Comments */}
       {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
@@ -126,13 +129,14 @@ const TweetCard = ({
         </div>
       )}
 
+      {/* Community comments */}
       {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
-            {/* {formatDateString(createdAt)} */}
+            {formatDateString(createdAt)}
             {community && ` - ${community.name} Community`}
           </p>
 
