@@ -19,6 +19,10 @@ export async function fetchTweets(pageNumber = 1, pageSize = 20) {
     .limit(pageSize)
     .populate({ path: "author", model: User })
     .populate({
+      path: "community",
+      model: Community,
+    })
+    .populate({
       path: "children",
       populate: {
         path: "author",
@@ -45,11 +49,11 @@ export async function fetchTweetById(tweetId: string) {
         model: User,
         select: "_id id name image",
       }) // Populate the author field with _id and username
-      // .populate({
-      //   path: "community",
-      //   model: Community,
-      //   select: "_id id name image",
-      // }) // Populate the community field with _id and name
+      .populate({
+        path: "community",
+        model: Community,
+        select: "_id id name image",
+      }) // Populate the community field with _id and name
       .populate({
         path: "children", // Populate the children field
         populate: [

@@ -1,6 +1,7 @@
 import { fetchUserTweets } from "@/lib/actions/user/userFetch.actions";
 import { redirect } from "next/navigation";
 import TweetCard from "../cards/TweetCard";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 // import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 // import { fetchUserPosts } from "@/lib/actions/user.actions";
@@ -43,15 +44,12 @@ interface Props {
 async function TweetsTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
 
-  //   if (accountType === "Community") {
-  //     //   result = await fetchCommunityPosts(accountId);
-  //   } else if (accountType === "User") {
-  //       result = await fetchUserTweets(accountId);
-  // } else {
-  //     redirect("/");
-  // }
-  result = await fetchUserTweets(accountId);
-  //   if (!result) redirect("/");
+  if (accountType === "Community") {
+    result = await fetchCommunityPosts(accountId);
+  } else {
+    result = await fetchUserTweets(accountId);
+  }
+  if (!result) redirect("/");
 
   return (
     // <div>Tweets Tab</div>

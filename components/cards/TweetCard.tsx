@@ -6,6 +6,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { FiShare2 } from "react-icons/fi";
 import { PiShareFat } from "react-icons/pi";
+import DeleteTweet from "../forms/DeleteTweet";
 
 interface Props {
   id: string;
@@ -98,13 +99,13 @@ const TweetCard = ({
         </div>
 
         {/* Delete Tweet */}
-        {/* <DeleteTweet
-          threadId={JSON.stringify(id)}
+        <DeleteTweet
+          tweetId={JSON.stringify(id)}
           currentUserId={currentUserId}
           authorId={author.id}
           parentId={parentId}
           isComment={isComment}
-        /> */}
+        />
       </div>
 
       {/* Show Comments */}
