@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
+
 import TopBar from "@/components/shared/TopBar";
 import BottomBar from "@/components/shared/BottomBar";
 

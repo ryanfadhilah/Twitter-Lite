@@ -23,9 +23,9 @@ const LeftSidebar = () => {
   return (
     <section className="custom-scrollbar leftsidebar">
       <div className="flex w-full flex-1 flex-col gap-6 px-6 ">
-        <Link href={"/"} className="flex items-center gap-4">
+        <Link href={"/"} className="flex items-center sm: justify-center gap-4">
           <ImTwitter className="text-blue shrink-0 sm:text-heading3-bold"></ImTwitter>
-          <p className="text-heading3-bold text-light-1 max-xs:hidden">
+          <p className="text-heading3-bold text-light-1 max-lg:hidden">
             Blue Bird
           </p>
         </Link>
@@ -64,7 +64,7 @@ const LeftSidebar = () => {
         </p>
       </div> */}
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center max-lg:hidden">
         <OrganizationSwitcher
           appearance={{
             baseTheme: dark,

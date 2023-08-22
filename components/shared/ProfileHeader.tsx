@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { SignOutButton, SignedIn } from "@clerk/nextjs";
+import { AiOutlineCloseSquare, AiFillEdit } from "react-icons/ai";
 
 interface Props {
   accountId: string;
@@ -20,6 +22,7 @@ function ProfileHeader({
   bio,
   type,
 }: Props) {
+  // const router = useRouter();
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
@@ -40,19 +43,27 @@ function ProfileHeader({
             <p className="text-base-medium text-gray-1">@{username}</p>
           </div>
         </div>
-        {accountId === authUserId && type !== "Community" && (
-          <Link href="/profile/edit">
-            <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2">
-              <Image
-                src="/assets/edit.svg"
-                alt="logout"
-                width={16}
-                height={16}
-              />
 
-              <p className="text-light-2 max-sm:hidden">Edit</p>
-            </div>
-          </Link>
+        {accountId === authUserId && type !== "Community" && (
+          <div className="flex items-center gap-3">
+            <SignedIn>
+              <SignOutButton
+              // signOutCallback={() => router.push("/sign-in")}
+              >
+                <div className="flex items-center cursor-pointer gap-1 rounded-sm bg-dark-2 px-4 py-2 ">
+                  <AiOutlineCloseSquare className="text-white"></AiOutlineCloseSquare>
+                  <p className="text-light-1 ">Logout</p>
+                </div>
+              </SignOutButton>
+            </SignedIn>
+
+            <Link href="/profile/edit">
+              <div className="flex items-center cursor-pointer gap-1 rounded-sm bg-dark-2 px-4 py-2">
+                <AiFillEdit className="text-white"></AiFillEdit>
+                <p className="text-light-2 max-sm:hidden">Edit</p>
+              </div>
+            </Link>
+          </div>
         )}
       </div>
 

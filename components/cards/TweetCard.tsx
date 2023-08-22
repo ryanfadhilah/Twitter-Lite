@@ -46,7 +46,7 @@ const TweetCard = ({
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7" // rather than making another REPLIED TWEET CARD
+        isComment ? "px-0 xs:px-7" : "bg-zinc-950 p-7" // rather than making another REPLIED TWEET CARD
       }`}
     >
       <div className="flex items-start justify-between">

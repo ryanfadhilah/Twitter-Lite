@@ -7,7 +7,7 @@ import { dark } from "@clerk/themes";
 
 const TopBar = () => {
   return (
-    <nav className="topbar md:hidden">
+    <nav className="topbar">
       <Link href={"/"} className="flex items-center gap-4">
         <ImTwitter className="text-blue shrink-0 sm:text-heading3-bold"></ImTwitter>
         <p className="text-heading3-bold text-light-1 max-xs:hidden">
@@ -16,15 +16,6 @@ const TopBar = () => {
       </Link>
 
       <div className="flex items-center gap-1">
-        <div className="block md:hidden">
-          <SignedIn>
-            <SignOutButton>
-              <div className="flex cursor-pointer">
-                <AiOutlineCloseSquare className="text-white"></AiOutlineCloseSquare>
-              </div>
-            </SignOutButton>
-          </SignedIn>
-        </div>
         <OrganizationSwitcher
           appearance={{
             baseTheme: dark,

@@ -2,10 +2,15 @@
 import TweetCard from "@/components/cards/TweetCard";
 import { fetchTweets } from "@/lib/actions/tweet/tweetFetch.actions";
 import { UserButton, currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const result = await fetchTweets(1, 30);
   const user = await currentUser();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
 
   return (
     <>
