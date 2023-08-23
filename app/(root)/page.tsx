@@ -1,12 +1,19 @@
 "use server";
 import TweetCard from "@/components/cards/TweetCard";
 import { fetchTweets } from "@/lib/actions/tweet/tweetFetch.actions";
+import { fetchUser } from "@/lib/actions/user/userFetch.actions";
 import { UserButton, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
   const result = await fetchTweets(1, 30);
+  // Clerk
   const user = await currentUser();
+
+  if (!user) return null;
+
+  // Mongo DB
+  const userInfo = await fetchUser(user.id);
 
   if (!user) {
     redirect("/sign-in");
@@ -32,6 +39,7 @@ export default async function Home() {
                 community={v.community}
                 createdAt={v.createdAt}
                 comments={v.children}
+                userInfoId={userInfo._id}
               />
             ))}
           </>

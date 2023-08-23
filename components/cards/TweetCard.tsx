@@ -7,6 +7,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { FiShare2 } from "react-icons/fi";
 import { PiShareFat } from "react-icons/pi";
 import DeleteTweet from "../forms/DeleteTweet";
+import LikeTweet from "../forms/LikeTweet";
 
 interface Props {
   id: string;
@@ -30,6 +31,7 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  userInfoId: string;
 }
 
 const TweetCard = ({
@@ -42,10 +44,11 @@ const TweetCard = ({
   createdAt,
   comments,
   isComment, // rather than making another REPLIED TWEET CARD
+  userInfoId,
 }: Props) => {
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
+      className={`flex w-full flex-col rounded-sm ${
         isComment ? "px-0 xs:px-7" : "bg-zinc-950 p-7" // rather than making another REPLIED TWEET CARD
       }`}
     >
@@ -75,7 +78,7 @@ const TweetCard = ({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5 text-slate-400 text-heading4-medium">
-                <AiOutlineHeart className=" hover:text-red-400 transition-all ease-out duration-200 cursor-pointer" />
+                <LikeTweet tweetId={id} userInfoId={userInfoId} />
 
                 <Link
                   href={`/tweet/${id}`}
@@ -149,6 +152,11 @@ const TweetCard = ({
             className="ml-1 rounded-full object-cover"
           />
         </Link>
+      )}
+      {!community && (
+        <p className="mt-5 text-subtle-medium text-gray-1">
+          {formatDateString(createdAt)}
+        </p>
       )}
     </article>
   );

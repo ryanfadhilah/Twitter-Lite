@@ -37,6 +37,8 @@ interface interfaceAccountProfile {
 }
 
 const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
+  const [loading, setLoading] = useState(false);
+
   // to get current Route
   const pathname = usePathname();
 
@@ -85,30 +87,35 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
   };
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-    // Image
-    const blob = values.profile_photo;
-    const hasImageChanged = isBase64Image(blob);
-    if (hasImageChanged) {
-      const imgRes = await startUpload(files);
+    try {
+      setLoading(true);
+      // Image
+      const blob = values.profile_photo;
+      const hasImageChanged = isBase64Image(blob);
+      if (hasImageChanged) {
+        const imgRes = await startUpload(files);
 
-      if (imgRes && imgRes[0].fileUrl) {
-        values.profile_photo = imgRes[0].fileUrl;
+        if (imgRes && imgRes[0].fileUrl) {
+          values.profile_photo = imgRes[0].fileUrl;
+        }
       }
-    }
 
-    await updateUser({
-      userId: user.id,
-      name: values.name,
-      username: values.username,
-      bio: values.bio,
-      image: values.profile_photo,
-      path: pathname,
-    });
-
-    if (pathname === "/profile/edit") {
-      router.back();
-    } else {
-      router.push("/");
+      await updateUser({
+        userId: user.id,
+        name: values.name,
+        username: values.username,
+        bio: values.bio,
+        image: values.profile_photo,
+        path: pathname,
+      });
+    } catch (error) {
+      if (pathname === "/profile/edit") {
+        setLoading(false);
+        router.back();
+      } else {
+        setLoading(false);
+        router.push("/");
+      }
     }
   };
 

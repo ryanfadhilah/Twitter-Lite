@@ -45,22 +45,26 @@ function ProfileHeader({
         </div>
 
         {accountId === authUserId && type !== "Community" && (
-          <div className="flex items-center gap-3">
+          <div className="flex max-sm:flex-col items-center gap-3">
             <SignedIn>
               <SignOutButton
               // signOutCallback={() => router.push("/sign-in")}
               >
-                <div className="flex items-center cursor-pointer gap-1 rounded-sm bg-dark-2 px-4 py-2 ">
-                  <AiOutlineCloseSquare className="text-white"></AiOutlineCloseSquare>
-                  <p className="text-light-1 ">Logout</p>
+                <div className=" group flex items-center cursor-pointer gap-1 rounded-sm bg-black px-4 py-2 transition-all ease-out duration-200 ">
+                  <AiOutlineCloseSquare className="text-red-500 group-hover:text-sky-500 transition-all ease-out duration-200"></AiOutlineCloseSquare>
+                  <p className="max-sm:hidden text-red-600 group-hover:text-sky-500 transition-all ease-out duration-200">
+                    Logout
+                  </p>
                 </div>
               </SignOutButton>
             </SignedIn>
 
             <Link href="/profile/edit">
-              <div className="flex items-center cursor-pointer gap-1 rounded-sm bg-dark-2 px-4 py-2">
-                <AiFillEdit className="text-white"></AiFillEdit>
-                <p className="text-light-2 max-sm:hidden">Edit</p>
+              <div className="group flex items-center cursor-pointer gap-1 rounded-sm bg-black px-4 py-2  transition-all ease-out duration-200">
+                <AiFillEdit className="text-white group-hover:text-sky-500 transition-all ease-out duration-200"></AiFillEdit>
+                <p className="text-light-2 max-sm:hidden  group-hover:text-sky-500 transition-all ease-out duration-200">
+                  Edit
+                </p>
               </div>
             </Link>
           </div>
