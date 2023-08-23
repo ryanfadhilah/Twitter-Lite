@@ -14,6 +14,7 @@ import TweetsTab from "@/components/shared/TweetsTab";
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
+  // Mongo DB
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
@@ -57,6 +58,7 @@ async function Page({ params }: { params: { id: string } }) {
                 currentUserId={user.id}
                 accountId={userInfo.id}
                 accountType="User"
+                userInfoId={userInfo._id}
               />
             </TabsContent>
           ))}

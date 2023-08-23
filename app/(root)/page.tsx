@@ -39,6 +39,7 @@ export default async function Home() {
                 community={v.community}
                 createdAt={v.createdAt}
                 comments={v.children}
+                likes={v.likes}
                 userInfoId={userInfo._id}
               />
             ))}

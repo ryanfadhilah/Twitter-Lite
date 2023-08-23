@@ -1,33 +1,48 @@
 "use client";
 import { createLike } from "@/lib/actions/like.actions";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { RiLoaderFill } from "react-icons/ri";
 
 type LikeTweet = {
   tweetId: string;
   userInfoId: string;
+  className?: string;
+  likes: boolean;
 };
 
-const LikeTweet = async ({ tweetId, userInfoId }: LikeTweet) => {
+const LikeTweet = ({ tweetId, userInfoId, className, likes }: LikeTweet) => {
   const [loading, setLoading] = useState(false);
   const path = usePathname();
+  const router = useRouter();
 
   return (
     <button
-      className="hover:text-red-700 transition-all ease-out duration-200"
+      className={`${
+        className
+          ? className
+          : "hover:text-red-700 transition-all ease-out duration-200"
+      }`}
       onClick={async () => {
         try {
-          setLoading(false);
-          await createLike({ tweetId, userInfoId });
+          setLoading(true);
+          await createLike({ tweetId, userInfoId, path });
+          router.refresh();
         } catch (error) {
           console.log("error likes: likeTweet Components");
         } finally {
-          setLoading(true);
+          setLoading(false);
         }
       }}
     >
-      <AiOutlineHeart></AiOutlineHeart>
+      {loading ? (
+        <RiLoaderFill className="animate-spin" />
+      ) : likes ? (
+        <AiFillHeart className="text-red-700"></AiFillHeart>
+      ) : (
+        <AiOutlineHeart />
+      )}
     </button>
   );
 };

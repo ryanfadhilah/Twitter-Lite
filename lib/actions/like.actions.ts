@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import Tweet from "../models/tweet.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
@@ -7,9 +8,14 @@ import { connectToDB } from "../mongoose";
 interface CreateLikeParams {
   userInfoId: string;
   tweetId: string;
+  path: string;
 }
 
-export async function createLike({ userInfoId, tweetId }: CreateLikeParams) {
+export async function createLike({
+  userInfoId,
+  tweetId,
+  path,
+}: CreateLikeParams) {
   try {
     connectToDB();
 
@@ -33,6 +39,7 @@ export async function createLike({ userInfoId, tweetId }: CreateLikeParams) {
       const user = await User.findById(userInfoId);
       user.likes = user.likes.filter((id: any) => id.toString() !== tweetId);
       await user.save();
+      revalidatePath(path);
     }
   } catch (error: any) {
     throw new Error(`Failed to like Tweet: ${error.message}`);

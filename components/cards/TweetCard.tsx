@@ -1,10 +1,8 @@
 import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import { FiShare2 } from "react-icons/fi";
 import { PiShareFat } from "react-icons/pi";
 import DeleteTweet from "../forms/DeleteTweet";
 import LikeTweet from "../forms/LikeTweet";
@@ -31,6 +29,7 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  likes: string[];
   userInfoId: string;
 }
 
@@ -44,6 +43,7 @@ const TweetCard = ({
   createdAt,
   comments,
   isComment, // rather than making another REPLIED TWEET CARD
+  likes,
   userInfoId,
 }: Props) => {
   return (
@@ -76,22 +76,39 @@ const TweetCard = ({
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
-            <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-              <div className="flex gap-3.5 text-slate-400 text-heading4-medium">
-                <LikeTweet tweetId={id} userInfoId={userInfoId} />
+            <div className={`${isComment && "mb-10"} mt-3 flex flex-col gap-3`}>
+              <div className="flex gap-5 text-slate-400 text-heading4-medium">
+                <div className="flex items-center gap-1 group">
+                  <LikeTweet
+                    tweetId={id}
+                    userInfoId={userInfoId}
+                    likes={likes.includes(userInfoId)}
+                    className="group-hover:text-red-700 transition-all ease-out duration-200"
+                  />
+                  <p
+                    className={`${
+                      likes.includes(userInfoId)
+                        ? "text-small-regular text-red-700 transition-all ease-out duration-200 cursor-pointer"
+                        : "text-small-regular group-hover:text-red-700 transition-all ease-out duration-200 cursor-pointer"
+                    }`}
+                  >
+                    {likes.length}
+                  </p>
+                </div>
 
                 <Link
                   href={`/tweet/${id}`}
-                  className=" hover:text-sky-400 transition-all ease-out duration-200 cursor-pointer"
+                  className="flex items-center gap-1 hover:text-sky-400 transition-all ease-out duration-200 cursor-pointer"
                 >
                   <BiCommentDetail />
+                  <p className="text-small-regular">{comments.length}</p>
                 </Link>
 
                 <PiShareFat className=" hover:text-emerald-400 transition-all ease-out duration-200 cursor-pointer" />
               </div>
 
               {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
+                <Link href={`/tweet/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                   </p>

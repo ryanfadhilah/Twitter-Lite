@@ -99,7 +99,6 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
           values.profile_photo = imgRes[0].fileUrl;
         }
       }
-
       await updateUser({
         userId: user.id,
         name: values.name,
@@ -108,7 +107,6 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
         image: values.profile_photo,
         path: pathname,
       });
-    } catch (error) {
       if (pathname === "/profile/edit") {
         setLoading(false);
         router.back();
@@ -116,6 +114,8 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
         setLoading(false);
         router.push("/");
       }
+    } catch (error) {
+      console.log("error update user");
     }
   };
 
@@ -232,7 +232,7 @@ const AccountProfile = ({ user, buttonTitle }: interfaceAccountProfile) => {
           />
 
           <Button className="bg-blue" type="submit">
-            Submit
+            {loading ? "Loading" : "Submit"}
           </Button>
         </form>
       </Form>

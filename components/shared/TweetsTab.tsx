@@ -39,9 +39,15 @@ interface Props {
   currentUserId: string;
   accountId: string;
   accountType: string;
+  userInfoId: string;
 }
 
-async function TweetsTab({ currentUserId, accountId, accountType }: Props) {
+async function TweetsTab({
+  currentUserId,
+  accountId,
+  accountType,
+  userInfoId,
+}: Props) {
   let result: Result;
 
   if (accountType === "Community") {
@@ -61,6 +67,7 @@ async function TweetsTab({ currentUserId, accountId, accountType }: Props) {
           currentUserId={currentUserId}
           parentId={v.parentId}
           content={v.text}
+          userInfoId={userInfoId}
           author={
             accountType === "User"
               ? { name: result.name, image: result.image, id: result.id }
