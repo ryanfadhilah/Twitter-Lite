@@ -88,8 +88,8 @@ const TweetCard = ({
                   <p
                     className={`${
                       likes.includes(userInfoId)
-                        ? "text-small-regular text-red-700 transition-all ease-out duration-200 cursor-pointer"
-                        : "text-small-regular group-hover:text-red-700 transition-all ease-out duration-200 cursor-pointer"
+                        ? "text-subtle-medium text-red-700 transition-all ease-out duration-200 cursor-pointer"
+                        : "text-subtle-medium group-hover:text-red-700 transition-all ease-out duration-200 cursor-pointer"
                     }`}
                   >
                     {likes.length}
@@ -101,7 +101,7 @@ const TweetCard = ({
                   className="flex items-center gap-1 hover:text-sky-400 transition-all ease-out duration-200 cursor-pointer"
                 >
                   <BiCommentDetail />
-                  <p className="text-small-regular">{comments.length}</p>
+                  <p className="text-subtle-medium">{comments.length}</p>
                 </Link>
 
                 <PiShareFat className=" hover:text-emerald-400 transition-all ease-out duration-200 cursor-pointer" />

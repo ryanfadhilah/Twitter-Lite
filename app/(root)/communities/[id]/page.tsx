@@ -8,12 +8,19 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 import TweetsTab from "@/components/shared/TweetsTab";
+import { fetchUser } from "@/lib/actions/user/userFetch.actions";
+import { redirect } from "next/navigation";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
 
   const communityDetails = await fetchCommunityDetails(params.id);
+
+  // Mongo DB
+  const userInfo = await fetchUser(user.id);
+
+  if (!user) redirect("/sign-in");
 
   return (
     <section>
@@ -56,6 +63,7 @@ async function Page({ params }: { params: { id: string } }) {
               currentUserId={user.id}
               accountId={communityDetails._id}
               accountType="Community"
+              userInfoId={userInfo._id}
             />
           </TabsContent>
 

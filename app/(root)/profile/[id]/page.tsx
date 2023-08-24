@@ -2,7 +2,10 @@ import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { fetchUser } from "@/lib/actions/user/userFetch.actions";
+import {
+  fetchUser,
+  fetchUserTweetActivity,
+} from "@/lib/actions/user/userFetch.actions";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 
 import { profileTabs } from "@/constants";
@@ -10,6 +13,7 @@ import { profileTabs } from "@/constants";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AiFillTags, AiOutlineMessage, AiOutlineTwitter } from "react-icons/ai";
 import TweetsTab from "@/components/shared/TweetsTab";
+import Link from "next/link";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
@@ -17,6 +21,7 @@ async function Page({ params }: { params: { id: string } }) {
   // Mongo DB
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
+  const activity = await fetchUserTweetActivity(userInfo._id);
 
   return (
     <section>
@@ -36,7 +41,7 @@ async function Page({ params }: { params: { id: string } }) {
               <TabsTrigger key={tab.label} value={tab.value} className="tab ">
                 {tab.label === "Tweets" && <AiOutlineTwitter />}
                 {tab.label === "Replies" && <AiOutlineMessage />}
-                {tab.label === "Tagged" && <AiFillTags />}
+                {tab.label === "Liked" && <AiFillTags />}
                 <p className="max-sm:hidden">{tab.label}</p>
 
                 {tab.label === "Tweets" && (
@@ -47,21 +52,52 @@ async function Page({ params }: { params: { id: string } }) {
               </TabsTrigger>
             ))}
           </TabsList>
-          {profileTabs.map((tab) => (
-            <TabsContent
-              key={`content-${tab.label}`}
-              value={tab.value}
-              className="w-full text-light-1"
-            >
-              {/* @ts-ignore */}
-              <TweetsTab
-                currentUserId={user.id}
-                accountId={userInfo.id}
-                accountType="User"
-                userInfoId={userInfo._id}
-              />
-            </TabsContent>
-          ))}
+
+          <TabsContent value={"tweets"} className="w-full text-light-1">
+            {/* @ts-ignore */}
+            <TweetsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              accountType="User"
+              userInfoId={userInfo._id}
+            />
+          </TabsContent>
+          <TabsContent value={"replies"} className="w-full text-light-1">
+            <>
+              <section className="mt-10 flex flex-col gap-5">
+                {activity.length > 0 ? (
+                  <>
+                    {activity.map((activity) => (
+                      <Link
+                        key={activity._id}
+                        href={`/tweet/${activity.parentId}`}
+                      >
+                        <article className="activity-card">
+                          <Image
+                            src={activity.author.image}
+                            alt="user_logo"
+                            width={20}
+                            height={20}
+                            className="rounded-full object-cover"
+                          />
+                          <p className="!text-small-regular text-light-1">
+                            <span className="mr-1 text-blue">
+                              {activity.author.name}
+                            </span>{" "}
+                            replied to your tweet
+                          </p>
+                        </article>
+                      </Link>
+                    ))}
+                  </>
+                ) : (
+                  <p className="!text-base-regular text-light-3">
+                    No activity yet
+                  </p>
+                )}
+              </section>
+            </>
+          </TabsContent>
         </Tabs>
       </div>
     </section>
