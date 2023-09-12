@@ -33,6 +33,7 @@ interface Result {
       };
     }[];
     likes: string[];
+    image: string | null;
   }[];
 }
 
@@ -70,6 +71,7 @@ async function TweetsTab({
           content={v.text}
           userInfoId={userInfoId}
           likes={v.likes}
+          image={v.image}
           author={
             accountType === "User"
               ? { name: result.name, image: result.image, id: result.id }

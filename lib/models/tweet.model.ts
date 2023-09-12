@@ -33,6 +33,9 @@ const tweetSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  image: {
+    type: String,
+  },
 });
 
 const Tweet = mongoose.models.Tweet || mongoose.model("Tweet", tweetSchema);

@@ -21,7 +21,7 @@ const LeftSidebar = () => {
   const { userId } = useAuth();
 
   return (
-    <section className="custom-scrollbar leftsidebar">
+    <section className="custom-scrollbar sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-black pb-5 pt-10 max-lg:hidden max-lg:justify-center">
       <div className="flex w-full flex-1 flex-col gap-6 px-6 ">
         <Link href={"/"} className="flex items-center sm: justify-center gap-4">
           <ImTwitter className="text-blue shrink-0 sm:text-heading3-bold"></ImTwitter>
@@ -43,7 +43,7 @@ const LeftSidebar = () => {
             <Link
               href={v.route}
               key={i}
-              className={`leftsidebar_link hover:bg-zinc-800 transition-all ease-out duration-200
+              className={`leftsidebar_link hover:bg-zinc-800 transition-all ease-out duration-200 rounded-md
             ${isActive && "bg-blue"}
             `}
             >

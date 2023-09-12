@@ -1,12 +1,16 @@
 "use server";
 import TweetCard from "@/components/cards/TweetCard";
+import Pagination from "@/components/shared/Pagination";
 import { fetchTweets } from "@/lib/actions/tweet/tweetFetch.actions";
 import { fetchUser } from "@/lib/actions/user/userFetch.actions";
 import { UserButton, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const result = await fetchTweets(1, 30);
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   // Clerk
   const user = await currentUser();
 
@@ -20,6 +24,11 @@ export default async function Home() {
   if (!user) {
     redirect("/sign-in");
   }
+
+  const result = await fetchTweets(
+    searchParams.page ? +searchParams.page : 1,
+    30
+  );
 
   return (
     <>
@@ -43,17 +52,18 @@ export default async function Home() {
                 comments={v.children}
                 likes={v.likes}
                 userInfoId={userInfo._id}
+                image={v.image}
               />
             ))}
           </>
         )}
       </section>
 
-      {/* <Pagination
-    path='/'
-    pageNumber={searchParams?.page ? +searchParams.page : 1}
-    isNext={result.isNext}
-  /> */}
+      <Pagination
+        path="/"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
     </>
   );
 }

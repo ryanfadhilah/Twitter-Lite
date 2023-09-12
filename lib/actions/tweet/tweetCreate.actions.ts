@@ -14,8 +14,16 @@ interface Params {
   author: string;
   communityId: string | null;
   path: string;
+  image: string | null;
 }
-export async function createTweet({ text, author, communityId, path }: Params) {
+
+export async function createTweet({
+  text,
+  author,
+  communityId,
+  path,
+  image,
+}: Params) {
   try {
     connectToDB();
 
@@ -28,6 +36,7 @@ export async function createTweet({ text, author, communityId, path }: Params) {
       text,
       author,
       community: communityIdObject,
+      image: image,
     });
 
     await User.findByIdAndUpdate(author, {
@@ -50,7 +59,8 @@ export async function addCommentToTweet(
   tweetId: string,
   commentText: string,
   userId: string,
-  path: string
+  path: string,
+  image: string | null
 ) {
   try {
     connectToDB();
@@ -68,6 +78,7 @@ export async function addCommentToTweet(
       text: commentText,
       author: userId,
       parentId: tweetId, // Set the parentId to the original Tweet's ID
+      image: image,
     });
 
     // Save the comment tweet to the database

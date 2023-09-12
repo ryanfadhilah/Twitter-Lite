@@ -31,6 +31,7 @@ interface Props {
   isComment?: boolean;
   likes: string[];
   userInfoId: string;
+  image: string | null;
 }
 
 const TweetCard = ({
@@ -45,6 +46,7 @@ const TweetCard = ({
   isComment, // rather than making another REPLIED TWEET CARD
   likes,
   userInfoId,
+  image,
 }: Props) => {
   return (
     <article
@@ -74,8 +76,12 @@ const TweetCard = ({
               </h4>
             </Link>
 
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
-
+            <p className="mt-2 text-small-regular text-light-2 mb-5">
+              {content}
+            </p>
+            {image && (
+              <Image src={image} alt="gambar" width={500} height={500}></Image>
+            )}
             <div className={`${isComment && "mb-10"} mt-3 flex flex-col gap-3`}>
               <div className="flex gap-5 text-slate-400 text-heading4-medium">
                 <div className="flex items-center gap-1 group">

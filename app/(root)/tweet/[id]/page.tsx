@@ -33,6 +33,7 @@ async function page({ params }: { params: { id: string } }) {
           comments={tweet.children}
           userInfoId={userInfo._id}
           likes={tweet.likes}
+          image={tweet.image}
         />
       </div>
 
@@ -59,6 +60,7 @@ async function page({ params }: { params: { id: string } }) {
             isComment // rather than making another REPLIED TWEET CARD
             userInfoId={userInfo._id}
             likes={childItem.likes}
+            image={childItem.image}
           />
         ))}
       </div>
