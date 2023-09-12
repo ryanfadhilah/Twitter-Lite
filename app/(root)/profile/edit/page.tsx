@@ -4,6 +4,10 @@ import { redirect } from "next/navigation";
 import AccountProfile from "@/components/forms/AccountProfile";
 import { fetchUser } from "@/lib/actions/user/userFetch.actions";
 
+export const metadata = {
+  title: "BluBird - Edit Profile",
+};
+
 async function Page() {
   const user = await currentUser();
   if (!user) return null;

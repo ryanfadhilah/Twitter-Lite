@@ -11,6 +11,18 @@ import TweetsTab from "@/components/shared/TweetsTab";
 import { fetchUser } from "@/lib/actions/user/userFetch.actions";
 import { redirect } from "next/navigation";
 
+// Metadata
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const communityDetails = await fetchCommunityDetails(params.id);
+  return {
+    title: `${communityDetails.name} - BlueBird`,
+    description: `${communityDetails.bio}`,
+    openGraph: {
+      images: [{ url: communityDetails.image }],
+    },
+  };
+}
+
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;

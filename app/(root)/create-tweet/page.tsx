@@ -5,6 +5,10 @@ import PostTweet from "@/components/forms/PostTweet";
 import { fetchUser } from "@/lib/actions/user/userFetch.actions";
 // import { fetchUser } from "@/lib/actions/user.actions";
 
+export const metadata = {
+  title: "BluBird - Create Tweet",
+};
+
 async function Page() {
   const user = await currentUser();
   if (!user) return null;

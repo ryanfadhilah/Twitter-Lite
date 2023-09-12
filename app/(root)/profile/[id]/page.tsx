@@ -15,6 +15,23 @@ import { AiFillTags, AiOutlineMessage, AiOutlineTwitter } from "react-icons/ai";
 import TweetsTab from "@/components/shared/TweetsTab";
 import Link from "next/link";
 
+export const metadata = {
+  title: "BluBird - Your Profile",
+};
+
+// Metadata
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const userInfo = await fetchUser(params.id);
+
+  return {
+    title: `${userInfo.name} - BlueBird`,
+    description: `${userInfo.bio}`,
+    openGraph: {
+      images: [{ url: userInfo.image }],
+    },
+  };
+}
+
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;

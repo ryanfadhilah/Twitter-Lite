@@ -10,6 +10,10 @@ import CommunityCard from "@/components/cards/CommunityCard";
 
 // import { fetchCommunities } from "@/lib/actions/community.actions";
 
+export const metadata = {
+  title: "BluBird - Communities",
+};
+
 async function Page({
   searchParams,
 }: {

@@ -9,6 +9,10 @@ import Searchbar from "@/components/shared/Searchbar";
 
 // import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 
+export const metadata = {
+  title: "BluBird - Search",
+};
+
 async function Page({
   searchParams,
 }: {

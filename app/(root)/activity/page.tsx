@@ -7,6 +7,10 @@ import {
   fetchUserTweetActivity,
 } from "@/lib/actions/user/userFetch.actions";
 
+export const metadata = {
+  title: "BluBird - Activity",
+};
+
 async function Page() {
   const user = await currentUser();
   if (!user) return null;
