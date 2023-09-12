@@ -10,7 +10,9 @@ export default async function Home() {
   // Clerk
   const user = await currentUser();
 
-  if (!user) return null;
+  if (!user) {
+    redirect("/sign-in");
+  }
 
   // Mongo DB
   const userInfo = await fetchUser(user.id);
