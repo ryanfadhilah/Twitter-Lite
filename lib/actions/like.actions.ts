@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Tweet from "../models/tweet.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
+import Community from "../models/community.model";
 
 interface CreateLikeParams {
   userInfoId: string;
@@ -43,6 +44,55 @@ export async function createLike({
     }
   } catch (error: any) {
     throw new Error(`Failed to like Tweet: ${error.message}`);
+  }
+}
+
+export async function getUserLikes(userInfoId: string) {
+  try {
+    connectToDB();
+
+    const user = await User.findOne({ _id: userInfoId }).populate({
+      path: "likes",
+      select: "_id text author username",
+      populate: {
+        path: "author",
+        select: "_id id",
+      },
+    });
+    return user;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user likes : ${error.message}`);
+  }
+}
+
+export async function fetchLikedPosts(tweetId: string) {
+  try {
+    connectToDB();
+    // Find all tweets authored by the user with the given userId
+    const tweets = await Tweet.find({ _id: tweetId }).populate([
+      {
+        path: "community",
+        model: Community,
+        select: "name id image _id", // Select the "name" and "_id" fields from the "Community" model
+      },
+      {
+        path: "author",
+        model: User,
+        select: "name id image _id username", // Select the "name" and "_id" fields from the "Community" model
+      },
+      {
+        path: "children",
+        model: Tweet,
+        populate: {
+          path: "author",
+          model: User,
+          select: "name image id _id username", // Select the "name" and "_id" fields from the "User" model
+        },
+      },
+    ]);
+    return tweets;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user posts: ${error.message}`);
   }
 }
 

@@ -57,7 +57,13 @@ async function TweetsTab({
   } else {
     result = await fetchUserTweets(accountId);
   }
-  if (!result) redirect("/");
+  if (!result || result.tweets.length < 1) {
+    return (
+      <div className="w-full text-center text-heading1-bold mt-5 text-blue/50">
+        <p>No Activity</p>
+      </div>
+    );
+  }
 
   return (
     // <div>Tweets Tab</div>

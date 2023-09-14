@@ -11,10 +11,16 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { profileTabs } from "@/constants";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AiFillTags, AiOutlineMessage, AiOutlineTwitter } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiOutlineMessage,
+  AiOutlineTwitter,
+} from "react-icons/ai";
 import TweetsTab from "@/components/shared/TweetsTab";
 import Link from "next/link";
 import { Metadata } from "next";
+import { getUserLikes } from "@/lib/actions/like.actions";
+import LikesTab from "@/components/shared/LikesTab";
 
 // Metadata
 export async function generateMetadata({
@@ -40,6 +46,7 @@ async function Page({ params }: { params: { id: string } }) {
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
   const activity = await fetchUserTweetActivity(userInfo._id);
+  const LikePosts = await getUserLikes(userInfo._id);
 
   return (
     <section>
@@ -59,7 +66,7 @@ async function Page({ params }: { params: { id: string } }) {
               <TabsTrigger key={tab.label} value={tab.value} className="tab ">
                 {tab.label === "Tweets" && <AiOutlineTwitter />}
                 {tab.label === "Replies" && <AiOutlineMessage />}
-                {tab.label === "Liked" && <AiFillTags />}
+                {tab.label === "Liked" && <AiFillHeart />}
                 <p className="max-sm:hidden">{tab.label}</p>
 
                 {tab.label === "Tweets" && (
@@ -80,9 +87,10 @@ async function Page({ params }: { params: { id: string } }) {
               userInfoId={userInfo._id}
             />
           </TabsContent>
+
           <TabsContent value={"replies"} className="w-full text-light-1">
             <>
-              <section className="mt-10 flex flex-col gap-5">
+              <section className="mt-10 flex flex-col gap-5 ">
                 {activity.length > 0 ? (
                   <>
                     {activity.map((activity) => (
@@ -90,7 +98,7 @@ async function Page({ params }: { params: { id: string } }) {
                         key={activity._id}
                         href={`/tweet/${activity.parentId}`}
                       >
-                        <article className="activity-card">
+                        <article className="flex items-center gap-2 rounded-sm px-7 py-4 bg-zinc-950">
                           <Image
                             src={activity.author.image}
                             alt="user_logo"
@@ -109,12 +117,20 @@ async function Page({ params }: { params: { id: string } }) {
                     ))}
                   </>
                 ) : (
-                  <p className="!text-base-regular text-light-3">
-                    No activity yet
-                  </p>
+                  <div className="w-full text-center text-heading1-bold mt-5 text-blue/50">
+                    <p>No Activity</p>
+                  </div>
                 )}
               </section>
             </>
+          </TabsContent>
+
+          <TabsContent value={"liked"} className="w-full text-light-1">
+            <LikesTab
+              userInfoId={LikePosts._id}
+              accountId={LikePosts.likes}
+              isDelete={userInfo._id}
+            />
           </TabsContent>
         </Tabs>
       </div>

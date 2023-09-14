@@ -32,6 +32,7 @@ interface Props {
   likes: string[];
   userInfoId: string;
   image: string | null;
+  isDelete?: string;
 }
 
 const TweetCard = ({
@@ -47,6 +48,7 @@ const TweetCard = ({
   likes,
   userInfoId,
   image,
+  isDelete,
 }: Props) => {
   return (
     <article
@@ -125,13 +127,17 @@ const TweetCard = ({
         </div>
 
         {/* Delete Tweet */}
-        <DeleteTweet
-          tweetId={JSON.stringify(id)}
-          currentUserId={currentUserId}
-          authorId={author.id}
-          parentId={parentId}
-          isComment={isComment}
-        />
+        {isDelete ? (
+          ""
+        ) : (
+          <DeleteTweet
+            tweetId={JSON.stringify(id)}
+            currentUserId={currentUserId}
+            authorId={author.id}
+            parentId={parentId}
+            isComment={isComment}
+          />
+        )}
       </div>
 
       {/* Show Comments */}
