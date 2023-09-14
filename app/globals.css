@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  background: transparent;
+  width: 0px;
+  height: 0px;
+}
+
 @layer components {
   /* main */
   .main-container {
@@ -91,30 +97,33 @@
   }
 }
 
-@layer utilities {
+/* @layer utilities {
   .css-invert {
     @apply invert-[50%] brightness-200;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 2px;
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
     background: #09090a;
+    background: transparent;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #5c5c7b;
-    border-radius: 50px;
+    background: #1f1f2b;
+    background: transparent;
+    border-radius: 5px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #7878a3;
+    background: #252531;
+    background: transparent;
   }
-}
+} */
 
 /* Clerk Responsive fix */
 .cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
