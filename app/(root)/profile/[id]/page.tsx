@@ -14,13 +14,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AiFillTags, AiOutlineMessage, AiOutlineTwitter } from "react-icons/ai";
 import TweetsTab from "@/components/shared/TweetsTab";
 import Link from "next/link";
-
-export const metadata = {
-  title: "BluBird - Your Profile",
-};
+import { Metadata } from "next";
 
 // Metadata
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const userInfo = await fetchUser(params.id);
 
   return {
