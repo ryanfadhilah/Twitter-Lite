@@ -110,7 +110,10 @@ async function Page({ params }: { params: { id: string } }) {
                             <span className="mr-1 text-blue">
                               {activity.author.name}
                             </span>{" "}
-                            replied to your tweet
+                            replied to your tweet{" "}
+                            <span className="text-sky-300">
+                              "{activity.text.slice(0, 100)}"
+                            </span>
                           </p>
                         </article>
                       </Link>
@@ -118,7 +121,7 @@ async function Page({ params }: { params: { id: string } }) {
                   </>
                 ) : (
                   <div className="w-full text-center text-heading1-bold mt-5 text-blue/50">
-                    <p>No Activity</p>
+                    <p>No Replies</p>
                   </div>
                 )}
               </section>

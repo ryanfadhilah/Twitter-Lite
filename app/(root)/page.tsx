@@ -27,7 +27,7 @@ export default async function Home({
 
   const result = await fetchTweets(
     searchParams.page ? +searchParams.page : 1,
-    30
+    5
   );
 
   return (

@@ -59,8 +59,8 @@ async function TweetsTab({
   }
   if (!result || result.tweets.length < 1) {
     return (
-      <div className="w-full text-center text-heading1-bold mt-5 text-blue/50">
-        <p>No Activity</p>
+      <div className="w-full text-center text-heading1-bold text-blue/50 mt-10 pt-5">
+        <p>No Tweets</p>
       </div>
     );
   }
