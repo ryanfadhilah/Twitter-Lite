@@ -41,7 +41,9 @@ async function Page({
 
       <section className="mt-9 flex flex-wrap gap-4">
         {result.communities.length === 0 ? (
-          <p className="no-result">No Result</p>
+          <div className="w-full text-center text-heading1-bold mt-5 text-blue/50">
+            <p>No Result</p>
+          </div>
         ) : (
           <>
             {result.communities.map((community) => (
